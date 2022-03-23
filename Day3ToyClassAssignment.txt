@@ -1,0 +1,116 @@
+public class HelloWorld{
+
+     public static void main(String []args){
+        
+        Toy t1 = new Toy("Lego",2000,"Plastic");
+        t1.setAgeLimit(3);
+        boolean isSafe1 = t1.checkSafeAge(4);
+        System.out.println("Toy is Safe " + isSafe1);
+        System.out.println("Toy is ..." + t1);
+        System.out.println("-------------------");
+        
+        ToyVehicle t2 = new ToyVehicle("Car",1500,"Metal");
+        t2.setAgeLimit(3);
+        t2.setVehicleType("4wheeler");
+        boolean isSafe2 = t2.checkSafeAge(2);
+        System.out.println("Toy is Safe " + isSafe2);
+        System.out.println("Toy is ..." + t2);
+        System.out.println("-------------------");
+        
+        RCToyVehicle t3 = new RCToyVehicle("RCCar",7000,"Metal");
+        t3.setAgeLimit(5);
+        t3.setVehicleType("4wheeler");
+        t3.setRechargeable(true);
+        boolean isSafe3 = t3.checkSafeAge(10);
+        System.out.println("Toy is Safe " + isSafe3);
+        System.out.println("Toy is ..." + t3);
+        System.out.println("-------------------");
+     }
+}
+
+class Toy
+{
+    String toyName;
+    float toyPrice;
+    int minAgeToPlay;
+    String toyMaterial;
+    
+    public Toy(String toyName, float toyPrice, String toyMaterial) {
+        super();
+		System.out.println("Toy is constructed...");
+		this.toyName = toyName;
+        this.toyPrice = toyPrice;
+        this.toyMaterial = toyMaterial;
+	}
+	
+	void setAgeLimit(int minAgeToPlay) {
+	    System.out.println("Setting minimum age to play with toy..");
+	    this.minAgeToPlay = minAgeToPlay;
+	}
+	
+	boolean checkSafeAge(int age) {
+	    System.out.println("Checking minimum age..");
+	    if(age >= minAgeToPlay)
+	    {
+	        return true;
+	    }
+	    else
+	    {
+	        return false;
+	    }
+	}
+	
+	@Override
+	public String toString() {
+		return "Toy [toyName=" + toyName + ", toyPrice=" + toyPrice + ", minAgeToPlay=" + minAgeToPlay
+				+ ", toyMaterial=" + toyMaterial + "]";
+	}
+}
+
+class ToyVehicle extends Toy
+{
+    String vehicleType;
+    
+    ToyVehicle(String toyName, float toyPrice, String toyMaterial)
+    {
+        super(toyName, toyPrice, toyMaterial);
+    }
+    
+    @Override
+	public String toString() {
+		return "ToyVehicle [vehicleType=" + vehicleType + ", " + super.toString() + "]";
+	}
+    
+    void setVehicleType(String vehicleType)
+    {
+        System.out.println("Setting is vehicle type...");
+        this.vehicleType = vehicleType;
+    }
+}
+
+class RCToyVehicle extends ToyVehicle
+{
+    boolean rechargeable;
+    
+    RCToyVehicle(String toyName, float toyPrice, String toyMaterial)
+    {
+        super(toyName, toyPrice, toyMaterial);
+       
+    }
+    
+    @Override
+	public String toString() {
+		return "RCToyVehicle [rechargeable=" + rechargeable + ", " + super.toString() + "]";
+	}
+	
+	void setRechargeable(boolean rechargeable)
+	{
+	    System.out.println("Setting is rechargeable status...");
+	    this.rechargeable = rechargeable;
+	    System.out.println("rechargeable status..." + this.rechargeable);
+	}
+    
+}
+
+
+
