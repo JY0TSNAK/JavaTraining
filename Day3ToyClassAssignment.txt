@@ -1,4 +1,4 @@
-public class HelloWorld{
+public class Assignment3{
 
      public static void main(String []args){
         
@@ -10,7 +10,7 @@ public class HelloWorld{
         System.out.println("-------------------");
         
         ToyVehicle t2 = new ToyVehicle("Car",1500,"Metal");
-        t2.setAgeLimit(3);
+        t2.setAgeLimit(4);
         t2.setVehicleType("4wheeler");
         boolean isSafe2 = t2.checkSafeAge(2);
         System.out.println("Toy is Safe " + isSafe2);
@@ -35,7 +35,7 @@ class Toy
     int minAgeToPlay;
     String toyMaterial;
     
-    public Toy(String toyName, float toyPrice, String toyMaterial) {
+    Toy(String toyName, float toyPrice, String toyMaterial) {
         super();
 		System.out.println("Toy is constructed...");
 		this.toyName = toyName;
