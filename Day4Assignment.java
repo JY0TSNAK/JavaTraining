@@ -59,6 +59,7 @@ class AirConditionerCompany extends Company { // isA
 	Owner ownerObj = new Owner(); //hasA
 	int capital;
 	RawMaterial rm;
+	static int totalNumberofACs; //static
 	
 	void setOwner (String ownerName) {
 		this.ownerObj.name = ownerName;
@@ -70,7 +71,9 @@ class AirConditionerCompany extends Company { // isA
 	{
 		AirConditioner ac = new AirConditioner();
 		System.out.println("Manufacturing Air Conditioner");
+		totalNumberofACs++;
 		return ac;
+		
 	}
 	
 	Revenue saleofAirConditionesr() {
