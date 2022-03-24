@@ -5,11 +5,28 @@ public class Day4Assignment {
 		// TODO Auto-generated method stub
 		AirConditionerCompany airCondComObj = new AirConditionerCompany();
 		airCondComObj.setOwner("Aparna");
+		
 		RawMaterial rm = new RawMaterial();
-		AirConditioner airConObj = airCondComObj.manufactures(rm);
+		System.out.println("Total numer of Air Conditioners manufactured : " + AirConditionerCompany.totalNumberofACs);
+		AirConditioner airConObj1 = airCondComObj.manufactures(rm);
+		AirConditioner airConObj2 = airCondComObj.manufactures(rm);
+		System.out.println("Total numer of Air Conditioners manufactured : " + AirConditionerCompany.totalNumberofACs);
+		
 		Revenue r = airCondComObj.saleofAirConditionesr();
-		ReportCard rc = airCondComObj.getFeedback(airConObj);
-
+		
+		ReportCard rc = airCondComObj.getFeedback(airConObj1);
+		
+		DematAccount daNum = new DematAccount(123, airCondComObj.ownerObj.name);
+		Trading t = new Trading(daNum, 456, 500.0f);
+		
+		Library l = new Library();
+		Book b = new Book();
+		l.borrowBook(b, airCondComObj.ownerObj);
+		System.out.println("Available number books in library : " + Library.booksAvailableToBorrow);
+		
+		KFC kfcObj = new KFC();
+		Food f = kfcObj.buyKFCFood();
+		
 		
 		//Toy newToy = new Toy();
 		//Shirt newShirt = new Shirt();
@@ -35,17 +52,30 @@ class Bank {
 
 class Branch {
 	
-	Account openAccount() {
-		Account acctObj = new Account();
+	Account openAccount(int acctNum, String acctHolderName) {
+		Account acctObj = new Account(acctNum, acctHolderName);
 		return acctObj;
 	}
 }
 
 class Account {
-		
+	int acctNum;
+	String acctHolderName;
+	public Account(int acctNum, String acctHolderName) {
+		super();
+		this.acctNum = acctNum;
+		this.acctHolderName = acctHolderName;
+	}
+	
 }
 
 final class DematAccount extends Account {
+
+	public DematAccount(int acctNum, String acctHolderName) {
+		super(acctNum, acctHolderName);
+		// TODO Auto-generated constructor stub
+	}
+
 	
 }
 
@@ -88,6 +118,7 @@ class AirConditionerCompany extends Company { // isA
 		System.out.println("Report Card of Air Conditioner");
 		return rc;
 	}
+	
 }
 
 class Revenue {
@@ -130,8 +161,16 @@ class ReportCard extends FeedbackForm {
 
 class Trading {
 	DematAccount da;
-	String StockId;
+	int StockId;
 	float price;
+	public Trading(DematAccount da, int stockId, float price) {
+		super();
+		this.da = da;
+		StockId = stockId;
+		this.price = price;
+		System.out.println(da.acctHolderName + " does trading");
+	}
+	
 	
 }
 
@@ -151,9 +190,10 @@ class Book {
 }
 
 class Library {
-	static int booksAvailableToBorrow; //static
+	static int booksAvailableToBorrow = 100; //static
 	
 	void borrowBook(Book bookObj, Person p) {
+		System.out.println(p.name + " borrowed book to read");
 		booksAvailableToBorrow--;
 	}
 }
@@ -183,6 +223,7 @@ class Aquarium {
 class KFC extends FoodRestaurant {
 	Food buyKFCFood () {
 		Food foodObj = new Food();
+		System.out.println("Buying KFC");
 		return foodObj;
 	}
 }
