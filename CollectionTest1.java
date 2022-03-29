@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Objects;
 import java.util.TreeSet;
 
 public class CollectionTest1 {
@@ -36,9 +37,10 @@ public class CollectionTest1 {
 		//Hash Set
 		HashSet<Book> bookHS = new HashSet<Book>();
 		System.out.println("Hash Set");
-		bookHS.add(new Book("ISBN-10_0544340620", "abc", "xyz", 250));
-		bookHS.add(new Book("ISBN-11_4565412312", "hkj", "bmm", 100));
-		bookHS.add(new Book("ISBN-12_7656235630", "sdfs", "gdf", 50));
+		bookHS.add(new Book("ISBN-10_9780544336261", "The Giver", "Lois Lowry", 225, 2014, 608.0f));
+		bookHS.add(new Book("ISBN-13_978-0547904146", "Gathering Blue", "Lois Lowry", 256, 2013, 705.0f));
+		bookHS.add(new Book("ISBN-12_7656235630", "sdfs", "gdf", 50, 2012, 450.0f));
+		bookHS.add(new Book("ISBN-12_7656235630", "sdfs", "gdf", 50, 2012, 450.0f));
 		
 		Iterator<Book> iteratorBookHS = bookHS.iterator();
 		while(iteratorBookHS.hasNext()) {
@@ -148,18 +150,50 @@ class Book {
 	String bookName;
 	String author;
 	int numOfPages;
-	public Book(String isbnNumber, String bookName, String author, int numOfPages) {
+	int edition;
+	float price;
+	
+
+	
+	public Book(String isbnNumber, String bookName, String author, int numOfPages, int edition, float price) {
 		super();
 		this.isbnNumber = isbnNumber;
 		this.bookName = bookName;
 		this.author = author;
 		this.numOfPages = numOfPages;
+		this.edition = edition;
+		this.price = price;
 	}
+
+
+
 	@Override
 	public String toString() {
 		return "Book [isbnNumber=" + isbnNumber + ", bookName=" + bookName + ", author=" + author + ", numOfPages="
-				+ numOfPages + "]";
+				+ numOfPages + ", edition=" + edition + ", price=" + price + "]";
 	}
+
+
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(isbnNumber);
+	}
+
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Book other = (Book) obj;
+		return Objects.equals(isbnNumber, other.isbnNumber);
+	}
+	
 	
 	
 }
