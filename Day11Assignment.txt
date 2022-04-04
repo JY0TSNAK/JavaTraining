@@ -1,0 +1,644 @@
+import java.time.LocalDate;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="passport_tbl")
+class Passport
+{
+    @Id
+    @GenerateValue
+    @Column(name="passport_id")
+	private int passportId; // <-- primary key
+	
+	@Column(name="passport_issuedt")
+	private LocalDate passportIssuedDate;
+	
+	@Column(name="passport_expirydt")
+	private LocalDate passportExpiryDate;
+	
+	@Column(name="passport_issuedby")
+	private String issuedBy;
+	
+	public int getPassportId() {
+		return passportId;
+	}
+	public void setPassportId(int passportId) {
+		this.passportId = passportId;
+	}
+	public LocalDate getPassportIssuedDate() {
+		return passportIssuedDate;
+	}
+	public void setPassportIssuedDate(LocalDate passportIssuedDate) {
+		this.passportIssuedDate = passportIssuedDate;
+	}
+	public LocalDate getPassportExpiryDate() {
+		return passportExpiryDate;
+	}
+	public void setPassportExpiryDate(LocalDate passportExpiryDate) {
+		this.passportExpiryDate = passportExpiryDate;
+	}
+	public String getIssuedBy() {
+		return issuedBy;
+	}
+	public void setIssuedBy(String issuedBy) {
+		this.issuedBy = issuedBy;
+	}
+	
+}
+
+
+----------------------------------------------------
+
+
+import java.time.LocalDate;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="project_tbl")
+class Project
+{
+    @Id
+	@GeneratedValue
+	@Column(name="project_id")
+	private int projectId;
+	
+	@Column(name="project_title")
+	private String projectTitle;
+	
+	@Column(name="project_deadline")
+	private LocalDate projectDeadLine;
+	
+	public int getProjectId() {
+		return projectId;
+	}
+	public void setProjectId(int projectId) {
+		this.projectId = projectId;
+	}
+	public String getProjectTitle() {
+		return projectTitle;
+	}
+	public void setProjectTitle(String projectTitle) {
+		this.projectTitle = projectTitle;
+	}
+	public LocalDate getProjectDeadLine() {
+		return projectDeadLine;
+	}
+	public void setProjectDeadLine(LocalDate projectDeadLine) {
+		this.projectDeadLine = projectDeadLine;
+	}
+	 
+}
+
+
+---------------------------------------------------------------------------------
+
+import java.time.LocalDate;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="address_tbl")
+class Address
+{
+    @Id
+	@GeneratedValue
+	@Column(name="addr_id")
+	private int addressId;
+
+	@Column(name="area")
+	private String area;
+	
+	@Column(name="street")
+	private String street;
+	
+	@Column(name="city")
+	private String city;
+	
+	@Column(name="state")
+	private String state;
+	
+	@Column(name="country")
+	private String country;
+	
+	@Column(name="pincode")
+	private int pincode;
+	
+	public int getAddressId() {
+		return addressId;
+	}
+	public void setAddressId(int addressId) {
+		this.addressId = addressId;
+	}
+	public String getArea() {
+		return area;
+	}
+	public void setArea(String area) {
+		this.area = area;
+	}
+	public String getStreet() {
+		return street;
+	}
+	public void setStreet(String street) {
+		this.street = street;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	public String getCountry() {
+		return country;
+	}
+	public void setCountry(String country) {
+		this.country = country;
+	}
+	public int getPincode() {
+		return pincode;
+	}
+	public void setPincode(int pincode) {
+		this.pincode = pincode;
+	}
+}
+
+
+
+----------------------------------------------------------------------
+
+
+import java.util.Set;
+
+public interface PassportDAO
+{
+	void addPassport(Passport pp);
+	void modifyPassport(Passport pp);
+	void deletePassport(int ppId);
+	Passport findPassport(int ppId);
+	Set<Passport> findAllPassports();
+}
+
+
+
+------------------------------------------------------------------
+
+import java.util.Set;
+
+public interface ProjectDAO
+{
+	void addProject(Project proj);
+	void modifyProject(Project proj);
+	void deleteProject(int projId);
+	Project findProject(int projId);
+	Set<Project> findAllProjects();
+}
+
+
+
+------------------------------------------------------------------
+
+import java.util.Set;
+
+public interface AddressDAO
+{
+	void addAddress(Address addr);
+	void modifyAddress(Address addr);
+	void deleteAddress(int addrId);
+	Project findAddress(int addrId);
+	Set<Address> findAllAddresses();
+}
+
+-------------------------------------------------------------------
+
+
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+
+public class PassportDAOImpl implements PassportDAO {
+
+	EntityManagerFactory emf;
+	EntityManager em ;
+	
+	public PassportDAOImpl() {
+	
+		System.out.println("PassportDAOImpl()....");
+
+		System.out.println("Trying to read persistence.xml file...");
+
+		this.emf = Persistence.createEntityManagerFactory("MyJPA");
+		System.out.println("EntityManagerFactory created....");
+				
+		this.em = emf.createEntityManager();
+		System.out.println("EntityManager created....");
+	}
+
+	public void addPassport(Passport pp) {
+		
+		EntityTransaction et = em.getTransaction();
+		et.begin();
+			em.persist(pp);
+		et.commit();
+	}
+
+	public void modifyPassport(Passport pp) {
+		EntityTransaction et = em.getTransaction();
+		et.begin();
+			em.merge(pp);
+		et.commit();
+	}
+
+	public void deletePassport(int ppId) {
+		EntityTransaction et = em.getTransaction();
+		et.begin();
+			Passport pp = em.find(Passport.class, ppId);
+			em.remove(pp);
+		et.commit();	
+	}
+
+	public Passport findPassport(int ppId) {
+		return em.find(Passport.class, ppId);
+	}
+
+	public Set<Passport> findAllPassports() {
+		Query query = em.createQuery("from Passport");
+		List<Passport> ppList = query.getResultList();
+		Set<Passport> ppSet = new HashSet(ppList);
+		return ppSet;
+	}
+}
+
+
+-------------------------------------------------------------------------------------
+
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+
+public class ProjectDAOImpl implements ProjectDAO {
+
+	EntityManagerFactory emf;
+	EntityManager em ;
+	
+	public ProjectDAOImpl() {
+	
+		System.out.println("ProjectDAOImpl()....");
+
+		System.out.println("Trying to read persistence.xml file...");
+
+		this.emf = Persistence.createEntityManagerFactory("MyJPA");
+		System.out.println("EntityManagerFactory created....");
+				
+		this.em = emf.createEntityManager();
+		System.out.println("EntityManager created....");
+	}
+
+	public void addProject(Project proj) {
+		
+		EntityTransaction et = em.getTransaction();
+		et.begin();
+			em.persist(proj);
+		et.commit();
+	}
+
+	public void modifyProject(Project proj) {
+		EntityTransaction et = em.getTransaction();
+		et.begin();
+			em.merge(proj);
+		et.commit();
+	}
+
+	public void deleteProject(int projId) {
+		EntityTransaction et = em.getTransaction();
+		et.begin();
+			Project proj = em.find(Project.class, projId);
+			em.remove(proj);
+		et.commit();	
+	}
+
+	public Project findProject(int projId) {
+		return em.find(Project.class, projId);
+	}
+
+	public Set<Project> findAllProjects() {
+		Query query = em.createQuery("from Project");
+		List<Project> projList = query.getResultList();
+		Set<Project> projSet = new HashSet(projList);
+		return projSet;
+	}
+}
+
+
+
+------------------------------------------------------------------------------
+
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+
+public class AddressDAOImpl implements AddressDAO {
+
+	EntityManagerFactory emf;
+	EntityManager em ;
+	
+	public AddressDAOImpl() {
+	
+		System.out.println("AddressDAOImpl()....");
+
+		System.out.println("Trying to read persistence.xml file...");
+
+		this.emf = Persistence.createEntityManagerFactory("MyJPA");
+		System.out.println("EntityManagerFactory created....");
+				
+		this.em = emf.createEntityManager();
+		System.out.println("EntityManager created....");
+	}
+
+	public void addAddress(Address addr) {
+		
+		EntityTransaction et = em.getTransaction();
+		et.begin();
+			em.persist(addr);
+		et.commit();
+	}
+
+	public void modifyAddress(Address addr) {
+		EntityTransaction et = em.getTransaction();
+		et.begin();
+			em.merge(addr);
+		et.commit();
+	}
+
+	public void deleteAddress(int addrId) {
+		EntityTransaction et = em.getTransaction();
+		et.begin();
+			Address addr = em.find(Address.class, addrId);
+			em.remove(addr);
+		et.commit();	
+	}
+
+	public Address findAddress(int addrId) {
+		return em.find(Address.class, addrId);
+	}
+
+	public Set<Address> findAllAddresses() {
+		Query query = em.createQuery("from Address");
+		List<Address> addrList = query.getResultList();
+		Set<Address> addrSet = new HashSet(addrList);
+		return addrSet;
+	}
+}
+
+
+---------------------------------------------------------------------------------
+
+public class TestProjectDAO {
+
+	ProjectDAOImpl ProjectDAO = new ProjectDAOImpl();
+	
+	@Test 
+	public void saveANewProjectTest() {
+			
+		Project theProj = new Project();
+
+		theProj.setProjectTitle("Online Banking");
+		theProj.setProjectDeadLine(LocalDate.of(2022, 04, 04));
+	
+		ProjectDAO.addProject(theProj);
+		System.out.println("Project is created....");
+	}
+
+	@Test
+	public void updateProjectTest() {
+
+		Project theProj = ProjectDAO.findProject(1); // ATTACHED OBJECT
+	
+		Assertions.assertTrue(theProj!=null);
+		theProj.setProjectTitle("Airline Project");
+		theProj.setProjectDeadLine(LocalDate.of(2022, 05, 04));
+
+		ProjectDAO.modifyProject(theProj);
+		System.out.println("Project is modified....");
+	}
+
+	@Test
+	public void deleteProjectTest() {
+		ProjectDAO.deleteProject(1);
+		System.out.println("Project is deleted....");
+	}
+	
+	@Test
+	public void findProjectTest() {
+
+		Project theProj = ProjectDAO.findProject(1); // ATTACHED OBJECT
+
+		System.out.println("Project Id : "+theProj.getProjectId());
+		System.out.println("Project Title  : "+theProj.getProjectTitle());
+		System.out.println("Project Dead Line    : "+theProj.getProjectDeadLine());
+	}
+
+	@Test
+	public void findAllProjectsTest() {
+
+		Set<Project> projSet = ProjectDAO.findAllProjects(); // ATTACHED OBJECT
+
+		Iterator<Employee> projIterator = projSet.iterator();
+		
+		while(projIterator.hasNext()) {
+			Project theProj = iterator.next();
+			System.out.println("Project Id : "+theProj.getProjectId());
+			System.out.println("Project Title  : "+theProj.getProjectTitle());
+			System.out.println("Project Dead Line    : "+theProj.getProjectDeadLine());
+		}		
+	}
+}
+
+----------------------------------------------------------------------------------------------------
+
+
+public class TestPassportDAO {
+
+	PassportDAOImpl PassportDAO = new PassportDAOImpl();
+	
+	@Test 
+	public void saveANewPassportTest() {
+			
+		Passport thePP = new Passport();
+
+		thePP.setPassportIssuedDate(LocalDate.of(2022, 04, 04));
+		thePP.setPassportExpiryDate(LocalDate.of(2032, 04, 04));
+		thePP.setIssuedBy("Govt of India");
+	
+		PassportDAO.addPassport(thePP);
+		System.out.println("Passport is created....");
+	}
+
+	@Test
+	public void updatePassportTest() {
+
+		Passport thePP = PassportDAO.findPassport(1); // ATTACHED OBJECT
+	
+		Assertions.assertTrue(thePP!=null);
+		thePP.setPassportIssuedDate(LocalDate.of(2020, 04, 04));
+		thePP.setPassportExpiryDate(LocalDate.of(2030, 04, 04));
+		thePP.setIssuedBy("Govt of India");
+
+		PassportDAO.modifyPassport(thePP);
+		System.out.println("Passport is modified....");
+	}
+
+	@Test
+	public void deletePassportTest() {
+		PassportDAO.deletePassport(1);
+		System.out.println("Passport is deleted....");
+	}
+	
+	@Test
+	public void findPassportTest() {
+
+		Passport thePP = PassportDAO.findPassport(1); // ATTACHED OBJECT
+
+		System.out.println("Passport Id : "+thePP.getPassportId());
+		System.out.println("Passport Issue Date : "+thePP.getPassportIssuedDate());
+		System.out.println("Passport Expiry Date : "+thePP.getPassportExpiryDate());
+		System.out.println("Passport Issued By    : "+thePP.getIssuedBy());
+	}
+
+	@Test
+	public void findAllPassportsTest() {
+
+		Set<Passport> ppSet = PassportDAO.findAllPassports(); // ATTACHED OBJECT
+
+		Iterator<Employee> ppIterator = ppSet.iterator();
+		
+		while(ppIterator.hasNext()) {
+			Passport thePP = iterator.next();
+			System.out.println("Passport Id : "+thePP.getPassportId());
+			System.out.println("Passport Issue Date : "+thePP.getPassportIssuedDate());
+			System.out.println("Passport Expiry Date : "+thePP.getPassportExpiryDate());
+			System.out.println("Passport Issued By    : "+thePP.getIssuedBy());
+		}		
+	}
+}
+
+____________________________________________________________________________
+
+
+public class TestAddressDAO {
+
+	AddressDAOImpl AddressDAO = new AddressDAOImpl();
+	
+	@Test 
+	public void saveANewAddressTest() {
+			
+		Address theAddr = new Address();
+
+		theAddr.setAddressId(101);
+		theAddr.setArea("belapur");
+		theAddr.setStreet("Khau Gali");
+		theAddr.setCity("Navi Mumbai");
+		theAddr.setState("Maharashtra");
+		theAddr.setCountry("India");
+		theAddr.setPincode(400614);
+		
+		AddressDAO.addAddress(theAddr);
+		System.out.println("Address is created....");
+	}
+
+	@Test
+	public void updateAddressTest() {
+
+		Address theAddr = AddressDAO.findAddress(1); // ATTACHED OBJECT
+	
+		Assertions.assertTrue(theAddr!=null);
+		theAddr.setArea("belapur");
+		theAddr.setStreet("Seawoods");
+		theAddr.setCity("Navi Mumbai");
+		theAddr.setState("Maharashtra");
+		theAddr.setCountry("India");
+		theAddr.setPincode(400614);
+
+		AddressDAO.modifyAddress(theAddr);
+		System.out.println("Address is modified....");
+	}
+
+	@Test
+	public void deleteAddressTest() {
+		AddressDAO.deleteAddress(1);
+		System.out.println("Address is deleted....");
+	}
+	
+	@Test
+	public void findAddressTest() {
+
+		Address theAddr = AddressDAO.findAddress(1); // ATTACHED OBJECT
+
+		System.out.println("Address Id : "+theAddr.getAddressId());
+		System.out.println("Area : " + theAddr.getArea());
+		System.out.println("Street : " + theAddr.getStreet());
+		System.out.println("City : " + theAddr.getCity());
+		System.out.println("State : " + theAddr.getState());
+		System.out.println("Country : " + theAddr.getCountry());
+		System.out.println("Pincode : " + theAddr.getPincode());
+		
+	}
+
+	@Test
+	public void findAllAddresssTest() {
+
+		Set<Address> ppSet = AddressDAO.findAllAddresss(); // ATTACHED OBJECT
+
+		Iterator<Employee> addrIterator = addrSet.iterator();
+		
+		while(addrIterator.hasNext()) {
+			Address theAddr = iterator.next();
+			System.out.println("Address Id : "+theAddr.getAddressId());
+			System.out.println("Area : " + theAddr.getArea());
+			System.out.println("Street : " + theAddr.getStreet());
+			System.out.println("City : " + theAddr.getCity());
+			System.out.println("State : " + theAddr.getState());
+			System.out.println("Country : " + theAddr.getCountry());
+			System.out.println("Pincode : " + theAddr.getPincode());
+		}		
+	}
+}
