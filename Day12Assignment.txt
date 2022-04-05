@@ -1,0 +1,595 @@
+package entity;
+
+import java.time.LocalDate;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+//1. create a pojo
+
+/*
+ * create table emp_tbl
+ * (
+ * 		emp_no int primary key,
+ * 		emp_name varchar(20),
+ * 		emp_job varchar(20),
+ * 		emp_doj date,
+ * 		emp_sal int,
+ * );
+ * 
+ * 		Object	Relation	Mapping
+ * 
+ * 
+ * empno	empname	empjob	empdoj	empsal  deptno
+ * 1										10	
+ * 2										10
+ * 3										10
+ * 
+ * 4										20
+ * 5										20
+ * 
+ * 6										30
+ * 7										30
+ * 8										30
+ * 
+ */
+@Entity
+@Table(name="emp_tbl2")
+public class Employee {
+	@Id
+	@GeneratedValue
+	@Column(name="emp_no")
+	private int employeeNumber;
+	
+	@Column(name="emp_name", length = 20)
+	private String name;
+	
+	@Column(name="emp_job", length = 20)
+	private String job;
+	
+	@Column(name="emp_doj")
+	private LocalDate joiningDate;
+	
+	@Column(name="emp_sal")
+	private double salary;
+	
+	@Column(name="emp_age")
+	private Integer age;
+	
+	@OneToOne( cascade = CascadeType.ALL)
+	@JoinColumn(name="passno")
+	private Passport passport;
+
+	@OneToOne( cascade = CascadeType.ALL)
+	@JoinColumn(name="pancard_id")
+	private Pancard pancard;
+	
+	@ManyToOne
+	@JoinColumn(name="dno")
+	Department dept;	
+
+	@OneToMany(mappedBy = "emp", cascade = CascadeType.ALL)
+	Set<Address> addresses = new HashSet<Address>();
+
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name="EmployeeProjectLink",
+	joinColumns = {@JoinColumn(name="eno")},
+	inverseJoinColumns = {@JoinColumn(name="pid")})
+	Set<Project> projects = new HashSet<Project>();
+	
+
+	public Employee( String name, String job, LocalDate joiningDate, double salary, Integer age, Pancard pancard, 
+			Passport passport, Department dept) {
+		super();
+		this.name = name;
+		this.job = job;
+		this.joiningDate = joiningDate;
+		this.salary = salary;
+		this.age = age;
+		this.pancard = pancard;
+		this.passport = passport;
+		this.dept = dept;
+	}
+	
+	
+	public Department getDept() {
+		return dept;
+	}
+
+	public void setDept(Department dept) {
+		this.dept = dept;
+	}
+
+	public Passport getPassport() {
+		return passport;
+	}
+
+	public void setPassport(Passport passport) {
+		this.passport = passport;
+	}
+
+	public Pancard getPancard() {
+		return pancard;
+	}
+
+	public void setPancard(Pancard pancard) {
+		this.pancard = pancard;
+	}
+
+	public Integer getAge() {
+		return age;
+	}
+
+	public void setAge(Integer age) {
+		this.age = age;
+	}
+
+	public Employee() {
+		super();
+		System.out.println("Employee created....");
+	}
+
+	public int getEmployeeNumber() {
+		return employeeNumber;
+	}
+
+	public void setEmployeeNumber(int employeeNumber) {
+		this.employeeNumber = employeeNumber;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getJob() {
+		return job;
+	}
+
+	public void setJob(String job) {
+		this.job = job;
+	}
+
+	public LocalDate getJoiningDate() {
+		return joiningDate;
+	}
+
+	public void setJoiningDate(LocalDate joiningDate) {
+		this.joiningDate = joiningDate;
+	}
+
+	public double getSalary() {
+		return salary;
+	}
+
+	public void setSalary(double salary) {
+		this.salary = salary;
+	}
+	
+	public Set<Address> getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(Set<Address> addresses) {
+		this.addresses = addresses;
+	}
+
+	public Set<Project> getProjects() {
+		return projects;
+	}
+
+	public void setProjects(Set<Project> projects) {
+		this.projects = projects;
+	}
+
+	
+}
+-------------------------------------------------------------------------------------------------
+
+import java.time.LocalDate;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="address_tbl")
+class Address
+{
+    @Id
+	@GeneratedValue
+	@Column(name="addr_id")
+	private int addressId;
+
+	@Column(name="area")
+	private String area;
+	
+	@Column(name="street")
+	private String street;
+	
+	@Column(name="city")
+	private String city;
+	
+	@Column(name="state")
+	private String state;
+	
+	@Column(name="country")
+	private String country;
+	
+	@Column(name="pincode")
+	private int pincode;
+
+	@ManyToOne
+	@JoinColumn(name="emp_no")
+	Employee emp;
+	
+	public int getAddressId() {
+		return addressId;
+	}
+	public void setAddressId(int addressId) {
+		this.addressId = addressId;
+	}
+	public String getArea() {
+		return area;
+	}
+	public void setArea(String area) {
+		this.area = area;
+	}
+	public String getStreet() {
+		return street;
+	}
+	public void setStreet(String street) {
+		this.street = street;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	public String getCountry() {
+		return country;
+	}
+	public void setCountry(String country) {
+		this.country = country;
+	}
+	public int getPincode() {
+		return pincode;
+	}
+	public void setPincode(int pincode) {
+		this.pincode = pincode;
+	}
+
+	public Employee getEmp() {
+		return emp;
+	}
+
+	public void setEmp(Employee emp) {
+		this.emp = emp;
+	}
+
+}
+
+-----------------------------------------------------------------------------------------------------
+
+import java.time.LocalDate;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="project_tbl")
+class Project
+{
+    @Id
+	@GeneratedValue
+	@Column(name="project_id")
+	private int projectId;
+	
+	@Column(name="project_title")
+	private String projectTitle;
+	
+	@Column(name="project_deadline")
+	private LocalDate projectDeadLine;
+
+	@ManyToMany
+	@JoinTable(name="EmployeeProjectLink",
+	joinColumns = {@JoinColumn(name="pid")},
+	inverseJoinColumns = {@JoinColumn(name="eno")})
+	Set<Employee> employees = new HashSet<Employee>();
+
+	
+	public int getProjectId() {
+		return projectId;
+	}
+	public void setProjectId(int projectId) {
+		this.projectId = projectId;
+	}
+	public String getProjectTitle() {
+		return projectTitle;
+	}
+	public void setProjectTitle(String projectTitle) {
+		this.projectTitle = projectTitle;
+	}
+	public LocalDate getProjectDeadLine() {
+		return projectDeadLine;
+	}
+	public void setProjectDeadLine(LocalDate projectDeadLine) {
+		this.projectDeadLine = projectDeadLine;
+	}
+
+	public Set<Employee> getEmployees() {
+		return employees;
+	}
+
+	public void setEmployees(Set<Employee> employees) {
+		this.employees = employees;
+	}
+
+	 
+}
+
+-------------------------------------------------------------------------------------
+
+
+
+import java.time.LocalDate;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="pancard_tbl")
+class Pancard
+{
+    @Id
+	@GeneratedValue
+	@Column(name="pancard_id")
+	private int pancardId;
+	
+	@Column(name="pancard_num")
+	private String pancardNum;
+	
+	@Column(name="pancard_valid")
+	private boolean pancardValidStatus;
+	
+	@OneToOne
+	private Employee emp;
+	
+	public int getPancardId() {
+		return pancardId;
+	}
+	public void setPancardId(int pancardId) {
+		this.pancardId = pancardId;
+	}
+	public String getPancardNum() {
+		return pancardNum;
+	}
+	public void setPancardNum(String pancardNum) {
+		this.pancardNum = pancardNum;
+	}
+	public boolean getPancardValidStatus() {
+		return pancardValidStatus;
+	}
+	public void setPancardValidStatus(LocalDate pancardValidStatus) {
+		this.pancardValidStatus = pancardValidStatus;
+	}
+
+	public Employee getEmp() {
+		return emp;
+	}
+	public void setEmp(Employee emp) {
+		this.emp = emp;
+	}
+	 
+}
+
+
+------------------------------------------------------------------
+
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+
+import org.junit.jupiter.api.Test;
+
+import entity.Department;
+import entity.Employee;
+import entity.Passport;
+
+public class CrudAssociationTesting {
+
+	EntityManagerFactory emf;
+	EntityManager em ;
+	
+	public CrudAssociationTesting() {
+		System.out.println("CrudTesting()....");
+		// TODO Auto-generated method stub
+				System.out.println("Trying to read persistence.xml file...");
+				
+				//3
+				this.emf = Persistence.createEntityManagerFactory("MyJPA");
+				System.out.println("EntityManagerFactory created....");
+				
+				this.em = emf.createEntityManager();
+				System.out.println("EntityManager created....");
+	}
+	
+	
+
+	@Test
+	public void createSingleDepartmentTest() {
+		
+		Department dept = new Department(1,"Sample","Sample");
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+			em.persist(dept);
+		tx.commit();
+	}
+
+	@Test
+	public void createSinglePancardTest() {
+		
+		Pancard thePancard = new Pancard();
+		thePancard.setPancardNum = "BHJPH4521F";
+		thePancard.setPancardValidStatus = true;
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+			em.persist(thePancard);
+		tx.commit();
+	}
+
+	@Test
+	public void createSingleAddressTest() {
+		
+		Address theAddr = new Address();
+
+		theAddr.setAddressId(101);
+		theAddr.setArea("belapur");
+		theAddr.setStreet("Khau Gali");
+		theAddr.setCity("Navi Mumbai");
+		theAddr.setState("Maharashtra");
+		theAddr.setCountry("India");
+		theAddr.setPincode(400614);
+
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+			em.persist(theAddr);
+		tx.commit();
+	}
+
+	@Test
+	public void createSingleProjectTest() {
+		
+		Project theProj = new Project();
+
+		theProj.setProjectTitle("Online Banking");
+		theProj.setProjectDeadLine(LocalDate.of(2022, 04, 04));
+
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+			em.persist(theProj);
+		tx.commit();
+	}
+
+	@Test
+	public void createSinglePassportTest() {
+		
+		Passport thePP = new Passport();
+		thePP.setIssuedBy("Govt. Of. India");
+		thePP.setPassportIssuedDate(LocalDate.of(2011, 12, 25));
+		thePP.setPassportExpiryDate(LocalDate.of(2021, 12, 25));
+
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+			em.persist(thePP);
+		tx.commit();
+	}
+	
+	@Test
+	public void createNewEmployeeWithAllDetailsTest() {
+		
+		Department dept = new Department(40,"Operations","New Mumbai");
+		
+		Pancard thePancard1 = em.find(Pancard.class, 101);
+		Pancard thePancard2 = em.find(Pancard.class, 102);
+		Pancard thePancard3 = em.find(Pancard.class, 103);
+
+		Passport thePP1 = em.find(Passport.class, 201);
+		Passport thePP2 = em.find(Passport.class, 202);
+		Passport thePP3 = em.find(Passport.class, 203);
+		
+		Address addr1 = em.find(Address.class, 401);
+		Address addr1 = em.find(Address.class, 402);
+		Address addr1 = em.find(Address.class, 403);
+		Address addr1 = em.find(Address.class, 404);
+		Address addr1 = em.find(Address.class, 405);
+		Address addr1 = em.find(Address.class, 406);
+		
+		Project proj1 = em.find(Project.class, 501);
+		Project proj2 = em.find(Project.class, 502);
+		Project proj3 = em.find(Project.class, 503);
+		Project proj4 = em.find(Project.class, 504);
+		Project proj5 = em.find(Project.class, 505);			
+		
+		Employee emp1 = new Employee("Seeta","DBA",LocalDate.now(),62000,23,thePancard1,passport1,dept);
+		Employee emp2 = new Employee("Reeta","DBA",LocalDate.now(),42000,23,thePancard2,passport2,dept);
+		Employee emp3 = new Employee("Geeta","DBA",LocalDate.now(),32000,23,thePancard3,passport3,dept);
+		
+		thePancard1.setEmp(emp1);
+		thePancard2.setEmp(emp2);
+		thePancard3.setEmp(emp3);
+
+		passport1.setEmp(emp1);
+		passport2.setEmp(emp2);
+		passport3.setEmp(emp3);
+
+		emp1.getAddresses().add(addr1);
+		emp1.getAddresses().add(addr3);
+		emp1.getAddresses().add(addr5);
+
+		emp2.getAddresses().add(addr2);
+		emp2.getAddresses().add(addr4);
+
+		emp3.getAddresses().add(addr6);
+
+		emp1.getProjects().add(proj1);
+		emp1.getProjects().add(proj3);
+
+		emp2.getProjects().add(proj2);
+		emp2.getProjects().add(proj4);
+		emp2.getProjects().add(proj5);
+
+		emp3.getProjects().add(proj1);
+		
+		Set <Employee> tempStaff = new HashSet<Employee>();
+		tempStaff.add(emp1); //triggering the insert query
+		tempStaff.add(emp2);
+		tempStaff.add(emp3);
+		
+		dept.setStaff(tempStaff);
+		
+		//OR
+		
+		//dept.getStaff().add(emp1);
+		//dept.getStaff().add(emp2);
+		//dept.getStaff().add(emp3);
+		
+		EntityTransaction tx = em.getTransaction();
+		
+		tx.begin();
+			em.persist(dept);				
+		tx.commit();
+		
+	}
+	
+}
