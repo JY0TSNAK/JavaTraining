@@ -1,0 +1,39 @@
+User
+|
+Visiter 
+|
+Customer - credentials 	Account RequestDetails
+		|	|
+		id	ACNum
+		Loginpwd
+		TxnPwd
+
+Request - Title, First Name, Middle Name, Last Name, Father's Name, Mobile No., EmailID, AdhaarCardNum, DOB
+	  ResdAddr,PerAddr, Occup, isATMCard, isNetBking, isT&C
+
+Address - AddressType, Line1, Line2, Landmark, State, City, Pincode
+Occupation - OccupType, SourceOfInc, GrossAnnualInc
+PAyee(Beneficiary) - NAme, ACNum, NickNAme(optional)
+Account - ACNum, Name, ACType, Balance, TXN
+LoginDetails - LastLoginDt
+TXN - FromAc, ToAC, Amount, TXNDt, Remarks, TxnType, MaturityInst, RefID, TXNMode, 
+Admin - AuthorisedBkPers
+CustomerRep
+
+Home
+Apply Online for Account(OpenSavingsAC) - submit req - refNUm generated to track status
+Register (OTP)
+Login (Authenticate)
+Forget UserID/Pwd (OTP)
+
+Dashboard
+AccountStmt (FromDt ToDt) - Select A/c from dispalyed list of acs
+FundTrf - AddPayee(SaveOption) - IMPS/NEFT/RTGS Txn (SaveOption)(TXNSuccess/Failure)
+UserProfile
+ChangeUserIDPwd - SetNewPwd (LoginPwd/TxnPwd) - SessionExpired
+
+AcDetails - Display details entered in Req (Title, First Name, Middle Name, Last Name, Father's Name, Mobile No., EmailID, AdhaarCardNum, DOB
+	  ResdAddr,PerAddr, Occup)
+AcSummary - Disply ACNUm,Bal, RecentTXNs
+
+ApproveACOPening - generate(CustomerId, ACNum, InitialPWD - email)
