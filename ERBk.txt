@@ -37,3 +37,25 @@ AcDetails - Display details entered in Req (Title, First Name, Middle Name, Last
 AcSummary - Disply ACNUm,Bal, RecentTXNs
 
 ApproveACOPening - generate(CustomerId, ACNum, InitialPWD - email)
+
+---------------------------------------------------------
+
+Cutomer -  (custid), Title, First Name, Middle Name, Last Name, Father's Name, Mobile No., EmailID, AdhaarCardNum, DOB
+	  Addr, Occup, isATMCard, isNetBking, isT&C, Account
+
+Account - ACNum, ACType, Balance, TXN, ac open date, (custid)
+
+Address - (addr id) AddressType, Line1, Line2, Landmark, State, City, Pincode (ResdAddr,PerAddr)
+
+Occupation - (occup id), OccupType, SourceOfInc, GrossAnnualInc
+
+Request Details - (srv ref no.), req date, isApproved, (a/cnum)
+
+Admin - Login Credentials, desg,
+
+(Credentials) Login Details - (cust id), usrname, login pwd, txn pwd
+
+ATM - cardno., cardname, fromdt, todt, cvv, a/cno
+
+ 
+one cutomer - many Accs, many addr, one occup, one login, one(many)reqs, many atms
