@@ -49,9 +49,9 @@ Address - (addr id) AddressType, Line1, Line2, Landmark, State, City, Pincode (R
 
 Occupation - (occup id), OccupType, SourceOfInc, GrossAnnualInc
 
-Request Details - (srv ref no.), req date, isApproved, (a/cnum)
+Request Details - (srv ref no.), req date, isApproved, (a/cnum), approved by(empnum)
 
-Admin - Login Credentials, desg,
+Admin - Login Credentials, desg, empnum
 
 (Credentials) Login Details - (cust id), usrname, login pwd, txn pwd
 
