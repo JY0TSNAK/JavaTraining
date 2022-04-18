@@ -1,0 +1,26 @@
+table {
+  margin-left: auto;
+ margin-right: auto;
+ }
+
+tr:nth-child(even) {
+    background-color:rgba(196, 228, 255, 0.711);
+}
+
+td {
+    border: none;
+    padding: 1px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+   
+}
+td:nth-child(even) {
+    border: none;
+    background-color: white;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+   
+}
+
+input {
+    width: 250pt;
+    font-family:sans-serif;
+}
