@@ -1,0 +1,59 @@
+<h2>Applicant Details</h2>
+<table border="7" cellspacing="7" cellpadding="7">
+    <tr>
+        <th>Applicant Id</th>
+        <th>Account Type</th>
+        <th>Name</th>
+        <th>Father Name</th>
+        <th>Mobile Number</th>
+        <th>Date of Birth</th>
+        <th>Married Status</th>
+        <th>Occupation</th>
+        <th>Aadhar Number</th>
+        <th>PAN card Number</th>
+        <th>Photo</th>
+        <th>Annual Income</th>
+        <th>Application Status</th>
+    </tr>
+    <tr *ngFor="let applicant of applicantArray">
+        <td>{{applicant.applicantId}}</td>
+        <td>{{applicant.accountType}}</td>
+        <td>{{applicant.applicantName}}</td>
+        <td>{{applicant.applicantFatherName}}</td>
+        <td>{{applicant.applicantBirthDate}}</td>
+        <td>{{applicant.mobileNumber}}</td>
+        <td>{{applicant.married}}</td>
+        <td>{{applicant.occupation}}</td>
+        <td>{{applicant.adhaarNumber}}</td>
+        <td>{{applicant.panCard}}</td>
+        <td>{{applicant.photo}}</td>
+        <td>{{applicant.annualIncome}}</td>
+        <td>{{applicant.applicationStatus}}
+            <button>Approve</button>
+            <button>In Progress</button>
+            <button>Reject</button>
+        </td>
+        <table border="7" cellspacing="7" cellpadding="7">
+            <tr>
+                <th>Address Id</th>
+                <th>Address Type</th>
+                <th>area</th>
+                <th>Street</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Country</th>
+                <th>Pincode</th>
+            </tr>
+            <tr *ngFor="let address of applicant.addressList">
+                <td>{{address.addressid}}</td>
+                <td>{{address.addresstype}}</td>
+                <td>{{address.area}}</td>
+                <td>{{address.street}}</td>
+                <td>{{address.city}}</td>
+                <td>{{address.state}}</td>
+                <td>{{address.country}}</td>
+                <td>{{address.pincode}}</td>
+            </tr>
+        </table>
+    </tr>
+</table>
