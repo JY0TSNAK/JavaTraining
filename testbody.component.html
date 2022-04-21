@@ -1,0 +1,10 @@
+Enter PinCode <input type="text" (input)="showPostalDetails()" [(ngModel)]="tempPincode"><br>
+Select City
+<select [(ngModel)]="selCity">
+    <option *ngFor="let po of responseDet.PostOffice" [ngValue]="po.Block">{{po.Block}}</option>
+</select>
+<br>
+Select State
+<select [(ngModel)]="selState">
+    <option *ngFor="let po of responseDet.PostOffice" [ngValue]="po.State">{{po.State}}</option>
+</select>
