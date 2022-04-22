@@ -1,6 +1,12 @@
-<table border=1 cellspacing=10 cellpadding=10>
+<body>
+<div class="applform">
+    <div class="header">
+        <h1>Create Account</h1>
+    </div>
+    <div class="table-body">
+<table class="table-body" cellspacing=10 cellpadding=10>
     <tr>
-        <td>Enter Account Type</td> 	
+        <td class="label-title">Enter Account Type</td> 	
         <td> 
             <select name="app_actype">
                 <option value="Savings">Savings</option>
@@ -9,10 +15,11 @@
         </td>
     </tr>
      
-    <tr>			<td>Enter Applicant Name</td> <td> <input type=text name="app_name"></td>		</tr>
+    <tr>			<td>Enter Applicant Name</td> <td> <input pattern="/^[a-zA-Z]*$/" type=text name="app_name"></td>		</tr>
     <tr>			<td>Enter Applicant's Father Name</td> <td> <input type=text name="app_fathername"></td>		</tr>
     <tr>			<td>Enter Applicant's Birthdate</td> <td> <input type=date name="app_dob"></td>		</tr>
-    <tr>			<td>Enter Mobile Number</td> <td> <input type=text name="app_nobile"></td>		</tr>
+    <tr>			<td>Enter Mobile Number</td> <td> <input pattern="/^[0-9]*$/" type=text name="app_nobile" required>
+                    <span ng-show="myForm.price_field.$error.pattern">Not a valid number!</span></td>		</tr>
         <tr> <td>Marital Status </td> 
         <td>
             <select name="app_maritalstatus">
@@ -56,6 +63,12 @@
     <tr>			<td>Enter Pan Card</td> <td> <input type=text name="app_pancard"></td>		</tr>
     <tr>			<td>Enter Photo</td> <td> <input type=text name="app_photo"></td>		</tr>	
     <tr>			<td>Enter Annual Income in Rs. </td> <td> <input type=number name="app_annual_income"></td>	</tr>
-    <tr>			<td> <input type="submit" name="submit" value="Apply For BankAccount"> </td>	</tr>
+    
 </table>
-</form>
+</div>
+<div class="footer">
+    <span>* required</span>
+            <button type="submit" class="btn">Create</button>
+</div>
+</div>
+</body>
